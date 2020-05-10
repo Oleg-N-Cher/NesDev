@@ -1,4 +1,4 @@
-MODULE Example_02; IMPORT n := NesLib, SYSTEM; (*$MAIN*)
+(*$MAIN*) MODULE Example_02; IMPORT n := NesLib, SYSTEM;
 (*
   this example shows how to set up a palette and use 8x8 HW sprites
   also shows how fast (or slow) C code is
@@ -41,7 +41,7 @@ BEGIN
     spr := SHORT(1 + n.Rand8() REM0 3);
       IF ODD(j DIV 2) THEN spr := -spr END;
         ball_dy[i] := USHORT(spr);
-  INC(i) UNTIL ( i ) >= CHR( BALLS_MAX );
+  INC(i) UNTIL i >= BALLS_MAX;
 
   LOOP (* now the main loop *)
     n.PpuWaitFrame; (* wait for next TV frame *)
@@ -56,6 +56,6 @@ BEGIN
       (* bounce the ball off the edges *)
       IF ball_x[i] >= 256-8 THEN ball_dx[i] := -ball_dx[i] END;
       IF ball_y[i] >= 240-8 THEN ball_dy[i] := -ball_dy[i] END;
-    INC(i) UNTIL ( i ) >= CHR( BALLS_MAX );
+    INC(i) UNTIL i >= BALLS_MAX;
   END
 END Example_02.

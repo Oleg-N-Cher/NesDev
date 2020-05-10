@@ -12,45 +12,42 @@
      previous versions were created since mid-2011, there were many updates
 *)
 
-MODULE NesLib [foreign]; IMPORT SYSTEM;
+MODULE [foreign] NesLib; IMPORT SYSTEM;
 
 CONST
-(*
-#define PAD_A			0x80
-#define PAD_B			0x40
-#define PAD_SELECT		0x20
-#define PAD_START		0x10
-#define PAD_UP			0x08
-#define PAD_DOWN		0x04
-#define PAD_LEFT		0x02
-#define PAD_RIGHT		0x01
+  PAD_A      * = 7;
+  PAD_B      * = 6;
+  PAD_SELECT * = 5;
+  PAD_START  * = 4;
+  PAD_UP     * = 3;
+  PAD_DOWN   * = 2;
+  PAD_LEFT   * = 1;
+  PAD_RIGHT  * = 0;
 
-#define OAM_FLIP_V		0x80
-#define OAM_FLIP_H		0x40
-#define OAM_BEHIND		0x20
+(*#define OAM_FLIP_V    0x80
+#define OAM_FLIP_H    0x40
+#define OAM_BEHIND    0x20
 
-#define MAX(x1,x2)		((x1)<(x2)?(x2):(x1))
-#define MIN(x1,x2)		((x1)<(x2)?(x1):(x2))
+#define MAX(x1,x2)    ((x1)<(x2)?(x2):(x1))
+#define MIN(x1,x2)    ((x1)<(x2)?(x1):(x2))
 
-#define MASK_SPR		0x10
-#define MASK_BG			0x08
-#define MASK_EDGE_SPR	0x04
-#define MASK_EDGE_BG	0x02
+#define MASK_SPR    0x10
+#define MASK_BG      0x08
+#define MASK_EDGE_SPR  0x04
+#define MASK_EDGE_BG  0x02
 *)
-   NAMETABLE_A* = 2000H;
-(*
-#define NAMETABLE_B		0x2400
-#define NAMETABLE_C		0x2800
-#define NAMETABLE_D		0x2c00
+  NAMETABLE_A * = 2000H;
+  NAMETABLE_B * = 2400H;
+  NAMETABLE_C * = 2800H;
+  NAMETABLE_D * = 2C00H;
 
-#define NULL			0
-#define TRUE			1
-#define FALSE			0
+  NULL        * = 0;
 
-#define NT_UPD_HORZ		0x40
-#define NT_UPD_VERT		0x80
-#define NT_UPD_EOF		0xff
-*)
+  NT_UPD_HORZ * = 40H;
+  NT_UPD_VERT * = 80H;
+  NT_UPD_EOF  * = 0FFH;
+
+PROCEDURE NesLib__init*; (* fake __init procedure, needs for compilation *)
 
 (* set bg and spr palettes, data is 32 bytes array *)
 
@@ -166,11 +163,11 @@ void __fastcall__ sample_play(unsigned char sample);
 
 
 
-//poll controller and return flags like PAD_LEFT etc, input is pad number (0 or 1)
+//poll controller and return flags like PAD_LEFT etc, input is pad number (0 or 1) *)
 
-unsigned char __fastcall__ pad_poll(unsigned char pad);
+PROCEDURE [fastcall] PadPoll* ["pad_poll"] (pad: BYTE): SET;
 
-//poll controller in trigger mode, a flag is set only on button down, not hold
+(* poll controller in trigger mode, a flag is set only on button down, not hold
 //if you need to poll the pad in both normal and trigger mode, poll it in the
 //trigger mode for first, then use pad_state
 
@@ -228,11 +225,11 @@ PROCEDURE [fastcall] SetRand* ["set_rand"] (seed: SHORTINT);
 // MSB|NT_UPD_VERT, LSB, LEN, [bytes] for a vertical sequence
 // NT_UPD_EOF to mark end of the buffer
 
-//length of this data should be under 256 bytes
+//length of this data should be under 256 bytes *)
 
-void __fastcall__ set_vram_update(unsigned char *buf);
+PROCEDURE [fastcall] SetVramUpdate* ["set_vram_update"] (buf: ARRAY [notag] OF INT8);
 
-//all following vram functions only work when display is disabled
+(* all following vram functions only work when display is disabled
 
 //do a series of VRAM writes, the same format as for set_vram_update, but writes done right away
 
@@ -288,14 +285,13 @@ void __fastcall__ delay(unsigned char frames);
 PROCEDURE- NTADR_A* (x, y: SHORTINT): ADRINT
   "(0x2000|(((y)<<5)|(x)))"; (* NAMETABLE_A = 2000H *)
 (*
-#define NTADR_B(x,y) 	(NAMETABLE_B|(((y)<<5)|(x)))
-#define NTADR_C(x,y) 	(NAMETABLE_C|(((y)<<5)|(x)))
-#define NTADR_D(x,y) 	(NAMETABLE_D|(((y)<<5)|(x)))
-
-//macro to get MSB and LSB
-
-#define MSB(x)			(((x)>>8))
-#define LSB(x)			(((x)&0xff))
+#define NTADR_B(x,y)   (NAMETABLE_B|(((y)<<5)|(x)))
+#define NTADR_C(x,y)   (NAMETABLE_C|(((y)<<5)|(x)))
+#define NTADR_D(x,y)   (NAMETABLE_D|(((y)<<5)|(x)))
 *)
+(* macro to get MSB and LSB *)
+
+PROCEDURE- MSB* (x: INTEGER): BYTE "(((x)>>8))";
+PROCEDURE- LSB* (x: INTEGER): BYTE "(((x)&0xff))";
 
 END NesLib.

@@ -67,11 +67,6 @@ extern SYSTEM_PTR SYSTEM_NEWREC();
 extern SYSTEM_PTR SYSTEM_NEWBLK (__U_SHORTINT size);
 extern SYSTEM_PTR SYSTEM_NEWARR (__U_SHORTINT size);
 extern SYSTEM_PTR SYSTEM_REGMOD();
-#ifdef SYSTEM_IncRef
-  extern void SYSTEM_INCREF();
-#else
-#  define SYSTEM_INCREF(proc) proc
-#endif
 extern void SYSTEM_REGCMD();
 extern void SYSTEM_REGTYP();
 extern void SYSTEM_REGFIN();
@@ -108,7 +103,7 @@ extern void SYSTEM_ENUMR();
 #  define __REGMAIN(name, enum)
 #endif
 #define __FINI	SYSTEM_FINI(); return 0
-#define __IMPORT(name__init)	SYSTEM_INCREF(name__init)
+#define __IMPORT(name__init)	name__init
 #ifdef SYSTEM_RegisterCommands
 #  define __REGCMD(name, cmd)	SYSTEM_REGCMD(m, name, cmd)
 #else

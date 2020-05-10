@@ -1,4 +1,5 @@
-MODULE Example_01; IMPORT n := NesLib, SYSTEM; (*$MAIN*)
+(*$MAIN*) MODULE Example_01; IMPORT n := NesLib, SYSTEM;
+
 (*
   this example code shows how to put some text in nametable
   it assumes that you have ASCII-encoded font in the CHR tiles $00-$3f
@@ -7,12 +8,12 @@ MODULE Example_01; IMPORT n := NesLib, SYSTEM; (*$MAIN*)
 
 (* put a string into the nametable *)
 
-PROCEDURE PutStr (adr: SHORTINT; str: ARRAY [notag] OF CHAR);
+PROCEDURE PutStr (adr: ADRINT; str: ARRAY [notag] OF CHAR);
 BEGIN
   n.VramAdr(adr);
   WHILE str[0] # 0X DO
     n.VramPut(CHR(ORD(str[0]) - 20H)); (*-0x20 because ASCII code 0x20 is placed in tile 0 of the CHR *)
-    INC(SYSTEM.VAL(SHORTINT, str));
+    INC(SYSTEM.VAL(ADRINT, str));
   END;
 END PutStr;
 
