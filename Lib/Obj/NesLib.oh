@@ -1,9 +1,9 @@
 /* Ofront+ 1.0 -sx3 -21 */
 
-#ifndef NesLib__h
-#define NesLib__h
+#ifndef NesLib__oh
+#define NesLib__oh
 
-#include "SYSTEM.h"
+#include "SYSTEM.oh"
 
 
 

@@ -51,15 +51,15 @@ PROCEDURE NesLib__init*; (* fake __init procedure, needs for compilation *)
 
 (* set bg and spr palettes, data is 32 bytes array *)
 
-PROCEDURE [fastcall] PalAll* ["pal_all"] (data: ARRAY [notag] OF CHAR);
+PROCEDURE [fastcall] PalAll* ["pal_all"] (data: POINTER TO ARRAY [notag] OF CHAR);
 
 (* set bg palette only, data is 16 bytes array *)
 
-PROCEDURE [fastcall] PalBg* ["pal_bg"] (data: ARRAY [notag] OF CHAR);
+PROCEDURE [fastcall] PalBg* ["pal_bg"] (data: POINTER TO ARRAY [notag] OF CHAR);
 
 (* set spr palette only, data is 16 bytes array *)
 
-PROCEDURE [fastcall] PalSpr* ["pal_spr"] (data: ARRAY [notag] OF CHAR);
+PROCEDURE [fastcall] PalSpr* ["pal_spr"] (data: POINTER TO ARRAY [notag] OF CHAR);
 
 (* set a palette entry, index is 0..31 *)
 
@@ -227,7 +227,7 @@ PROCEDURE [fastcall] SetRand* ["set_rand"] (seed: SHORTINT);
 
 //length of this data should be under 256 bytes *)
 
-PROCEDURE [fastcall] SetVramUpdate* ["set_vram_update"] (buf: ARRAY [notag] OF INT8);
+PROCEDURE [fastcall] SetVramUpdate* ["set_vram_update"] (buf: POINTER TO ARRAY [notag] OF INT8);
 
 (* all following vram functions only work when display is disabled
 
