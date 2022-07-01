@@ -5,6 +5,7 @@
 *)
 
 TYPE
+  UINT8 = SYSTEM.BYTE;
   PalSprites = ARRAY 16 OF CHAR;
 
 CONST

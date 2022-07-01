@@ -47,6 +47,9 @@ CONST
   NT_UPD_VERT * = 80H;
   NT_UPD_EOF  * = 0FFH;
 
+TYPE
+  BYTE = SYSTEM.BYTE;
+
 PROCEDURE NesLib__init*; (* fake __init procedure, needs for compilation *)
 
 (* set bg and spr palettes, data is 32 bytes array *)
@@ -204,12 +207,12 @@ void __fastcall__ bank_bg(unsigned char n);
 
 (* get random number 0..255 or 0..65535 *)
 
-PROCEDURE [fastcall] Rand8* ["rand8"] (): UINT8;
+PROCEDURE [fastcall] Rand8* ["rand8"] (): BYTE;
 PROCEDURE [fastcall] Rand16* ["rand16"] (): INT16;
 
 (* set random seed *)
 
-PROCEDURE [fastcall] SetRand* ["set_rand"] (seed: SHORTINT);
+PROCEDURE [fastcall] SetRand* ["set_rand"] (seed: INT16);
 
 (* when display is enabled, vram access could only be done with this vram update system
 //the function sets a pointer to the update buffer that contains data and addresses
@@ -282,7 +285,7 @@ void __fastcall__ delay(unsigned char frames);
 
 //macro to calculate nametable address from X,Y in compile time *)
 
-PROCEDURE- NTADR_A* (x, y: SHORTINT): ADRINT
+PROCEDURE- NTADR_A* (x, y: INT16): ADRINT
   "(0x2000|(((y)<<5)|(x)))"; (* NAMETABLE_A = 2000H *)
 (*
 #define NTADR_B(x,y)   (NAMETABLE_B|(((y)<<5)|(x)))
@@ -291,7 +294,7 @@ PROCEDURE- NTADR_A* (x, y: SHORTINT): ADRINT
 *)
 (* macro to get MSB and LSB *)
 
-PROCEDURE- MSB* (x: INTEGER): BYTE "(((x)>>8))";
-PROCEDURE- LSB* (x: INTEGER): BYTE "(((x)&0xff))";
+PROCEDURE- MSB* (x: INTEGER): INT8 "(((x)>>8))";
+PROCEDURE- LSB* (x: INTEGER): INT8 "(((x)&0xff))";
 
 END NesLib.

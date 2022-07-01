@@ -6,6 +6,8 @@
   while rendering is enabled
 *)
 
+TYPE UINT8 = SYSTEM.BYTE;
+
 VAR
   x, y: UINT8; i: SET;
 

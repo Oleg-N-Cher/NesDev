@@ -8,7 +8,7 @@
 
 (* put a string into the nametable *)
 
-PROCEDURE PutStr (adr: ADRINT; str: ARRAY [notag] OF CHAR);
+PROCEDURE PutStr (adr: ADRINT; str: POINTER TO ARRAY [notag] OF CHAR);
 BEGIN
   n.VramAdr(adr);
   WHILE str[0] # 0X DO
